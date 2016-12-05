@@ -1,0 +1,42 @@
+1) How can we maintain tractable data structures for use with phylogenetic projects?
+
+"I just wasted five hours running an analysis on the wrong input file."
+
+"I can't remember where I saved my output."
+
+"I accidentally overwrote my raw data."
+
+Many of us have probably said one or more of the above sentences. When you're balancing 
+multiple projects and lots of data, 
+One of the biggest challenges to any project is placing project files in a structure that is 
+easy for you, the scientist, to access and maintain. 
+
+This chapter will cover the basics of project organization and data organization and management. 
+At the end of this chapter, you should be familiar with:
+
+1. How to store project input files and project outputs
+2. How to organize your data in a way that is reusable for you, and for others
+3. How to automate many data management and sorting functions that are usually performed 
+in a spreadsheet program
+
+Following this chapter, there is a short practicum where we will use what we've learned to 
+subsample taxonomic data for use in a later phylogenetic analysis.
+
+     General data 'best practices': flat files, variables as columns and occurrences as rows, data as read only
+    Pandas for parsing data
+    Grouping data by taxonomic level
+    Choosing a subset of data to include - at random, and with clade-structured subsampling
+    Writing out the relevant info about what taxa were subsampled
+
+2) Reading character data
+
+    Subsampling character data according to part (1)
+    Managing the namespaces
+    Using pack to ensure that all data are represented in both datasets (important in BEAST, will shortly be unimportant in RevBayes)
+    Writing out the data
+
+3) Processing the output
+
+    Pruning non-data tips from a tree (ie occurrance time taxa)
+    Summarizing
+    Some sort of short capstone, such as showing how to extract the width of the HPD to demonstrate something about sampling or something.
