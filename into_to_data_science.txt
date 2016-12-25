@@ -1,4 +1,5 @@
-1) How can we maintain tractable data structures for use with phylogenetic projects?
+##Introduction: How can we maintain tractable data structures for use with phylogenetic 
+projects?
 
 "I just wasted five hours running an analysis on the wrong input file."
 
@@ -7,22 +8,130 @@
 "I accidentally overwrote my raw data."
 
 Many of us have probably said one or more of the above sentences. When you're balancing 
-multiple projects and lots of data, 
-One of the biggest challenges to any project is placing project files in a structure that is 
-easy for you, the scientist, to access and maintain. 
+multiple projects and lots of data, it can be easy to lose track of files.
+One of the biggest challenges to any project is placing project files in a structure that 
+is easy for you, the scientist, to access and maintain. 
 
 This chapter will cover the basics of project organization and data organization and management. 
 At the end of this chapter, you should be familiar with:
 
-1. How to store project input files and project outputs
-2. How to organize your data in a way that is reusable for you, and for others
+1. Concept: How to store project input files, scripts and project outputs
+2. Concept: How to organize your data in a way that is reusable for you, and for others
+3. Hands-On: How to use the command line to create directories, move files and view the files that 
+you have
+
+## Storing data files
+
+This book will discuss not solely the Dendropy computing library, but efficient Python computation
+for phylogenetic analyses. In this section, we are going to address a very specific aim:
+setting up projects on your computer in a way that will allow you to manage your projects 
+efficiently. We will use hands-on examples throughout this section.
+
+When managing a project, you want to *keep files together as much as possible*. Doing this 
+makes it easier to document your project, and avoid losing data files. For example, let's create
+a directory at the command line for all of our project data. We will do this in UNIX, not 
+Python right away. The reason for this is that most servers, Macintosh and Linux machines 
+will have the tools to do this available. UNIX is a very commonly-used tool. Open your 
+command line and type:
+
+```UNIX
+mkdir phylo_data_science
+```
+
+This has created a new folder in your computer called phylo_data_science. It is currently 
+empty. You can try navigating to this directory using your normal file viewer. We're now 
+going to put some content into this directory. Open a test editor of your choosing. In the 
+file write a short note about why you have created this directory. For example, in my directory,
+I wrote 
+
+```
+This directory contains files for a tutorial on using data science to learn phylogenetics
+```
+
+save this as README.txt. Now, at the command line, type:
+
+```
+cd phylo
+```
+
+then hit tab. What happens when you hit tab? The whole file name pops up! This behavior is 
+called *tab completion*, and it's incredibly useful. Tab completion saves you from typing 
+out the whole file name (and potentially making typos). If you press tab and nothing comes 
+up? Then you know that either you haven't entered enough characters to make a unique match 
+- for example, if you have phylo_data_science and phylo_Bayesian, or that the file doesn't 
+exist in the directory you're in. 
+
+We are now in the phylo_data_science directory. If you type 
+
+```UNIX
+ls
+```
+you should see the README file you made. If you don't see it, check that you've saved the 
+file correctly. If you have, check that you're in the right directory by typing
+
+```UNIX
+pwd
+```
+
+for print working directory. If something went wrong in your cd command, this will let you 
+know.
+
+Now, we will make four subdirectories.
+
+```UNIX
+
+mkdir scripts
+mkdir data
+mkdir output
+mkdir documentation
+```
+
+These four subdirectories will all serve important purposes. Our scripts directory will house
+the Python code we will write. We will talk in further chapters about why it is important
+and useful to keep all of the scripts for a single project together. For now, just know that 
+it is. 
+
+Our data directory will house our raw data. We want our raw data to be housed on its own. If 
+we make a mistake in how we save output files, we can always go back to our raw data and 
+run the analysis again ... so long as we have maintained the integrity of our raw data. 
+Once we have populated our data directory with the necessary data, we do not write to it. 
+A simple motto for this philosophy is that *data are read-only*. 
+
+We do, however, write to our output directory. We will talk in future chapters about using 
+Python to make readable and informative output file names. For now, just know that the results 
+of _any_ analysis go in the output directory.
+
+Documentation is where we can put miscellaneous, informative files. For example, papers that
+you are reading for your project, cost sheets for sequencing, talk slides.
+
+This is the basic setup all chapters of this book will rely on. This manner of file organization
+is very transparent: anyone looking at your file directory can understand what components 
+of your research project are stored where. If you follow this structure, when you go to 
+publish your paper, you can simply archive your entire project directory to meet most 
+funders' and journal's guidelines for providing data and software code. And who couldn't 
+use a little less on their plate when it comes time to submit a paper?
+
+###Recap: Our Three Goals
+
+So far, we have introduced two important concepts: *keep files together as much as possible* 
+and *data are read-only*. The first principle means to keep data, output and code related to
+one project in one place on your computer to increase your organization. The second principle
+means to treat raw data as untouchable. Any outputs of analyses should be kept separate to
+avoid loss of data, and to ensure you can rerun any steps as needed.
+
+In learning these two concepts, we have used hands-on commands: mkdir to create directories, 
+ls to look at their contents and cd to navigate. We also learned to check our navigation with
+the pwd command and to use tab-complete to increase the efficiency of our typing.
+
+
+this should go in a different chapter
 3. How to automate many data management and sorting functions that are usually performed 
 in a spreadsheet program
 
 Following this chapter, there is a short practicum where we will use what we've learned to 
 subsample taxonomic data for use in a later phylogenetic analysis.
 
-     General data 'best practices': flat files, variables as columns and occurrences as rows, data as read only
+    General data 'best practices': flat files, variables as columns and occurrences as rows, data as read only
     Pandas for parsing data
     Grouping data by taxonomic level
     Choosing a subset of data to include - at random, and with clade-structured subsampling
