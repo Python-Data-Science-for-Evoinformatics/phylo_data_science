@@ -177,6 +177,49 @@ grouping and cleaning using Pandas.
 
 ## Storing Data
 
+When you save a file in Excel, you don't simply save the data. You save, encoded in binary,
+information about cell positioning, coloring, and other document attributes. In the previous 
+section, we mentioned that the behavior of a file loaded into a spreadsheet viewing program 
+can vary between versions of the software. This is not because the data are changing. This
+is because there are often subtle changes to how the data are displayed or how statistics 
+are calculated. These subtle changes can cause dramatically different renderings of files
+across versions and platforms. 
+
+All of this extraneous information also makes the file harder to read at the command line, 
+or in Python. For example, in the data directory, you will find two data files: Ants.csv and 
+Ants.xlsx. At the command line, type:
+
+```UNIX
+
+head Data/Ants.csv
+head Data/Ants.xlsx
+```
+
+Which of these files are you able to visualize? 
+
+The Ants.csv file is stored in what is called a *flat file*. Flat files are plain text - 
+they don't contain any characters that can't be typed with a keyboard, or viewed at the 
+command line. Any fancy formatting in a plain text file comes from the viewer. For example,
+this book is written in plain text. The nice formatting you see is the result of rendering 
+software. If you were to view this file at the command line, you would still be able to 
+access all of the data within it. Because flat files can be read by both human and machine,
+they are often considered preferable to files with extensive encoding of extra information.
+
+For the purposes of this lesson, we will show you how to get data out of spreadsheet files 
+(such as Excel files), but we will predominantly be describing how you can avoid using these
+file types. 
+
+Inside each flat file, data should be organized with each row being an observation, and each 
+column being the variables observed. If you open the Ants.csv file, you will note that each
+row corresponds to one fossil ant. Each column is labeled as a variable observed about the 
+ant - taxonomy, age of the fossil and notes. Most programmatic ways of handling data assume 
+this structure.  
+
+You will also notice that all the column names have underscores, rather than spaces. Most 
+programming languages will assume that a space indicates the end of a name, so it's best to
+avoid spaces. Lastly, notice that the data directory also contains a README. This README
+tells the user what data files they should expect to find when they download your data.
+
 ## The Pandas Library
 
 ## Common Spreadsheet Operations
@@ -189,7 +232,6 @@ grouping and cleaning using Pandas.
 Following this chapter, there is a short practicum where we will use what we've learned to 
 subsample taxonomic data for use in a later phylogenetic analysis.
 
-    General data 'best practices': flat files, variables as columns and occurrences as rows, data as read only
     Pandas for parsing data
     Grouping data by taxonomic level
     Choosing a subset of data to include - at random, and with clade-structured subsampling
