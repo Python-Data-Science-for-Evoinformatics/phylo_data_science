@@ -222,6 +222,102 @@ tells the user what data files they should expect to find when they download you
 
 ## The Pandas Library
 
+There are many ways to process data at the command line. These range from simple methods 
+available in UNIX to elaborate and complex libraries in R or Python. In this section, we'll 
+get to know Pandas a little better. We will use Pandas as a gateway to getting familiar with 
+Python. Once we have learned how to carry out some common spreadsheet operations, we will
+discuss Python programming more generally in the next chapter. This is by no means an exhaustive 
+look at the Pandas library. It is simply a teaser to show some useful ways that you might 
+interact with data in Python. 
+
+Pandas was written by Wes McKinney to facilitate efficient data processing, manipulation and 
+plotting in Python. The fundamental data type of Pandas is a dataframe, an object containing
+rows and columns of data. For our Ants.csv data, the rows will be the fossil ants. The columns
+will be the observations (fossil minimum ages, maximum ages, and taxonomy). It's instructive
+to look at an example. At the command line, type:
+
+```python
+ipython notebook
+```
+
+This will open an iPython Notebook. These notebooks are Python instances, run on your computer,
+but rendered in the browser. Browser rendering allows the notebook to have lots of nice features,
+like plot rendering and clean visualization of dataframes. Each space for you to type is called
+a 'cell'. A cell is a unit of code that can be run independently of all other cells. This 
+is very nice for debugging, as we will see later.
+
+In the first cell, type:
+
+```python
+import pandas as pd
+```
+
+Pandas is a library for the Python language. Libraries are sets of code, created for a purpose,
+and contributed back to Python. Python, being an open source and user-developed language, 
+welcomes this. When we tell Python to import a library, we are telling Python to look into
+that codebase and make its functions open to us. The 'as pd' is called an alias. Many programmers
+prefer to type fewer characters than more, and so will use aliases to shorten the names of 
+libraries.
+
+Let's load some data into Python, via the Pandas library:
+
+```UNIX
+ant_data = pd.read_csv('data/Ants.csv')
+```
+
+To view the data, type:
+
+```python
+ant_data
+```
+
+What we see is the data. We are able to call up the data to view because the data have been 
+saved to a variable, ant_data, which was stored in memory as a dataframe when we called 
+pd.read_csv. Let's unpack the syntax a little bit:
+
+|Command Piece | Meaning|
+|--------------|--------|
+|pd. | Informs Python to look inside the Pandas library for the code we want to access |
+| read_csv | The code we want to access. read_csv is called a function - a small unit of code that works together to perform a small set of operations. In this case, the read_csv code works to take in a file, read the contents, and convert the contents to a dataframe 
+| ant_data = | Takes the output of read_csv (a dataframe) and saves it to a variable in memory, so we can access it later |
+
+### Challenge:
+Try this command again without saving it to a variable. What happens? Is it
+what you expected? Why did this happen?
+
+Let's take a closer look at the ant_data object. On the face of it, it looks very much like 
+our Excel file. Now, we'll explore how to access data in this dataframe. Let's start by getting
+a look at all the names in the file. There are a couple ways we can do this:
+
+```python
+ant_data[[0]]
+```
+
+or
+
+```python 
+ant_data.specimen
+```
+
+In our first block of code, we call the dataframe object and use what is called indexing 
+to get the first column. Now, you may be thinking, what is going on with the notation? The 
+brackets indicate that we will be accessing a column. Python counts from zero. This may be
+somewhat surprising - that the language doesn't start with one. It's actually quite natural-
+you weren't born at one year old, were you? But it still takes a little to get used to - 
+programmers often verbally say the first item, but they mean the zeroeth item.
+
+In our second block of code, we call the column by its name - specimen. This is a very natural
+way to access the data. We gave attributes of the data names, why not use them?
+
+##Challenge:
+
+Try accessing other columns. When will it be useful to access by name? When will it not?
+
+
+
+
+
+
 ## Common Spreadsheet Operations
 
 
