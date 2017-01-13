@@ -186,10 +186,19 @@ All of this extraneous information also makes the file harder to read at the com
 or in Python. For example, in the data directory, you will find two data files: Ants.csv and 
 Ants.xlsx. At the command line, type:
 
+
+
 ```UNIX
 
 head Data/Ants.csv
 head Data/Ants.xlsx
+```
+**Note for Pat and Andre: If you do this in your own workspaces, you'll need to do:** 
+
+```UNIX
+
+head ../Data/Ants.csv
+head ../Data/Ants.xlsx
 ```
 
 Which of these files are you able to visualize? 
@@ -279,6 +288,10 @@ Now we will use this function to load some data into Python, via the Pandas libr
 
 ```UNIX
 ant_data = pd.read_csv('data/Ants.csv')
+```
+**Note for Pat and Andre: If you do this in your own workspaces, you'll need to do:** 
+```UNIX
+ant_data = pd.read_csv('../Data/Ants.csv')
 ```
 
 To view the data, type:
@@ -481,7 +494,9 @@ Does anyone see a problem with what I did there?
 
 In the previous command, I switched the inequality to accidentally drop all the values I actually wanted to keep! So far, we've covered some important conceptual data lessons - that data are read-only, that data should be stored in flat files. We will now learn an important lesson as it pertains to code - that code can be saved for later, as an exact record of what we did in a session of programming.
 
-This might not sound that important, but I think most of us have probably been working in a spreadsheet and completely forgotten how we got the useful annotations on a plot, of calculated a summary statistic. 
+This might not sound that important, but I think most of us have probably been working in a spreadsheet and completely forgotten how we got the useful annotations on a plot, of calculated a summary statistic. In this section, we will cover some best practices for keeping track of what we've done. We will expand on these best practices later, and in more complexity.
+
+
 
 
 
@@ -498,6 +513,7 @@ This might not sound that important, but I think most of us have probably been w
 Following this chapter, there is a short practicum where we will use what we've learned to 
 subsample taxonomic data for use in a later phylogenetic analysis.
 
+    Pandas for parsing data
     Grouping data by taxonomic level
     Choosing a subset of data to include - at random, and with clade-structured subsampling
     Writing out the relevant info about what taxa were subsampled
