@@ -525,6 +525,31 @@ After finishing this chapter, you will usderstand:
 
 ## Subsetting and Sorting Data 
 
+One common task many researchers do with their data is break it into smaller chunks, perhaps by treatment, to look at effects in that group. We're not working with experiemental data here, but we can certainly split our data up. Ants are known in the literature as the Formicids. This is a family. There are many subfamilies of ants. We might be interested in seeing if we have equal samples of each subfamily. 
+
+We can group our data by subfamily like so:
+
+```python
+sub_fams = ant_data.groupby('subfamily')
+```
+
+Doing this creates a groupby object, or a list of chunks of our data, identified by the subfamily to which they belong. We can  view them like so:
+
+```python
+for fam in sub_fams:
+    print(fam)
+```
+
+Congratulations, you've written your first loop. What this loop does is, for every object in sub_fams, Python prints the object to the screen. print() is a Python function available in all installations of Python (version 3.0+). 'fam' is what is known as a *loop variable*. Python automatically assumes that, if sub_fams is an object containing other objects, that fam will be the smallest unit of the sub_fams container. In other languages, you might have to assign the loop variable before using it, but Python is pretty smart about figuring out what it is. 
+
+Our original question was if all of the groups are about the same size. So let's answer it:
+
+```python
+sub_fams.size()
+```
+
+They are not. The samples of Formicinae and Dolichoderinae, for example, are much bigger than the rest. These are also the most specious groups of ants. Could the disparity in the sample be due to group speciousity? 
+
 
 ## Lists and Loops
 
