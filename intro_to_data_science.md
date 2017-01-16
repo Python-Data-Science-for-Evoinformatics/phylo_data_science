@@ -243,10 +243,10 @@ will be the observations (fossil minimum ages, maximum ages, and taxonomy). It's
 to look at an example. At the command line, type:
 
 ```python
-ipython notebook
+Jupyter notebook
 ```
 
-This will open an iPython Notebook. These notebooks are Python instances, run on your computer,
+This will open an Jupyter Notebook. These notebooks are Python instances, run on your computer,
 but rendered in the browser. Browser rendering allows the notebook to have lots of nice features,
 like plot rendering and clean visualization of dataframes. Each space for you to type is called
 a 'cell'. A cell is a unit of code that can be run independently of all other cells. This 
@@ -258,7 +258,7 @@ In the first cell, type:
 import pandas as pd
 ```
 
-Pandas is a library for the Python language. Libraries are sets of code, created for a purpose,
+And click 'run'. Pandas is a library for the Python language. Libraries are sets of code, created for a purpose,
 and contributed back to Python. Python, being an open source and user-developed language, 
 welcomes this. When we tell Python to import a library, we are telling Python to look into
 that codebase and make its functions open to us. The 'as pd' is called an alias. Many programmers
@@ -490,23 +490,45 @@ ant_data = ant_data[ant_data.min_ma > ant_data.max_ma]
 
 Does anyone see a problem with what I did there?
 
+I made a mistake and selected only the data that have a minimum age larger than the maximum age, and used it to overwrite the dataframe object! If I overwrote my data for real, this would be a big problem. But I didn't - Python is not doing these operations in the actual spreadsheet. It's doing them on a dataframe held in memorey - our real data are perfectly safe in the Ants.csv file. 
+
 ## Programming as a Living Record of Your Work
 
 In the previous command, I switched the inequality to accidentally drop all the values I actually wanted to keep! So far, we've covered some important conceptual data lessons - that data are read-only, that data should be stored in flat files. We will now learn an important lesson as it pertains to code - that code can be saved for later, as an exact record of what we did in a session of programming.
 
 This might not sound that important, but I think most of us have probably been working in a spreadsheet and completely forgotten how we got the useful annotations on a plot, of calculated a summary statistic. In this section, we will cover some best practices for keeping track of what we've done. We will expand on these best practices later, and in more complexity.
 
+For now, let's have a look at the tool we've been using, the Jupyter Notebook. We've been typing into a window in our browser. That window is running Python on our computer, and rendering the output in a nice format using Java. We have code cells, which we have been pasting code into cells and running it. In these notebooks, you can create a new cell, and chenge it's type by selecting something other than code from the dropdown. For example, we could pick 'Markdown' to write notes.
+
+What we are doing when we do this is weaving together code and data to make readable documents that follow our whole workflow. When we are done for a session, we can select 'Save and Checkpoint' from the File menu. This will save our notebook for later. A notebook can be emailed to a collaborator, or, as we will cover later, managed under version control. We can also download the file as a plain Python script in the File menu. We will discuss why we might want to do this in Chapter Four.
+
+Together, what this means is that our code to reproduce the analysis we did is always available. If we need to go back and do it again, for example, if we get more data, that's easy to do. We just run the code again. If a colleague wants to try the analysis again, we can simply send them the code. This is much easier than trying to explain to someone where to click to get a certain option, particularly when spreadsheet softwares are not consistent across platforms.
+
+So what to do with the mistake I made? We can simply go back to our notebook and re-run the steps before I made the mistake, then fix the inequality in the equation. 
+
+## Recap
+
+In this chapter, we have discussed how to programmatically access and read data using the Pandas library. We have used a variety of commands to perform simple data accession, as well as more complex choices involving multiple columns and rows. We even made a mistake in the data that we accessed - and, in the process, learned that we can use the programmatic record to reproduce the steps before we made our mistake to get our data back.
 
 
+# Chapter Four: Common Spreadsheet Operations and How to Automate Them
+
+## Introduction
+
+We've now learned a bit about how to read in data and access data in using Python. This chapter will guide you through some common operations that researchers often want to do to with data using Python. We will then take a step back and discuss how to use common programming conventions, like loops and lists  to make automating boring tasks easier.
+
+After finishing this chapter, you will usderstand:
+
+1. *Concept:* How data can be subsetted and sorted in the computer's memory. 
+2. *Concept:* How lists and loops can be used to perform data analysis tasks multiple times.
+3. *Hands On:* Exposure to the Python language's syntax for managing collections of objects.
+
+## Subsetting and Sorting Data 
 
 
+## Lists and Loops
 
-
-
-## Common Spreadsheet Operations
-
-
-
+# Chapter Five: Functions, Scripts and Revision Management 
 
 
 
