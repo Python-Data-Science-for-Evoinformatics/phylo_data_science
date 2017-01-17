@@ -548,14 +548,82 @@ Our original question was if all of the groups are about the same size. So let's
 sub_fams.size()
 ```
 
-They are not. The samples of Formicinae and Dolichoderinae, for example, are much bigger than the rest. These are also the most specious groups of ants. Could the disparity in the sample be due to group speciousity? 
+They are not. The samples of Formicinae and Dolichoderinae, for example, are much bigger than the rest. These are also the most specious groups of ants. Could the disparity in the sample be due to group speciousity? I've made a secodn spreadsheet with a rough guess at the species richness of each of the ant groups in this data set. Let's load it:
+
+```python
+sub_r = pd.read_csv('data/subfamilyRichness.csv', index_col=0)
+```
+
+You'll notice we've added a new option to reading in a csv file - index_col. This allows us to specifiy which column we would like to be the index. In this case, we want the subfamily names to be the index.
+
+To get these two data sources together, we need to do some massaging of our data. Groupby objects can be turned into dataframes in which the index is the groupname (in our case, the subfamily) and the data are the sizes of the group like so:
+
+```python
+sizes = pd.DataFrame(sub_fams.size())
+```
+
+But this actually gives us a multi-level index that is unsuitable for our purposes. I'm going to have us reset the index to the names of the subfamilies. We're going to do this first by looping over our groupby objects and getting the names of the groups (the subfamily) and putting those in a list. We do this by first creating the list. Then, we initialize our loop. And we take the first value in each groupby group, which is the name of the group.
+
+```python
+names = []
+for fam in sub_fams:
+    names.append(fam[0])
+sizes.reset_index
+sizes.index = names
+```
+
+Once we have executed the loop, we erase the index that exists and reset it to our group names.
+
+>###Challenge  
+
+> - Try calling functions of the groupby objects, for example, mean() on the sub\_fams object. What would these types of functions be helpful for? Remember, once you've typed in sub\_fams. and hit tab, you can see available methods.
+
+## Merging and Using Data
+
+Now we have two dataframes, one with our observed data and one with the number of species that exist in nature. To do mathematical operations using both pieces of data, we will combine them. We will do this using a merge, which combines two datasets on a given column:
+
+```python
+new_sizes= sizes.merge(sub_r, left_index=True, right_index=True)
+
+```
+
+In our case, we will merge sizes to sub\_r. We will use the nice indices we just created as our join columns. This is specified by 'left\_index', the index of the object before we call the merge function being set to true, and right_index, the index of the object after we call the merge being set to true. If we had called join with sub_r being first, it would be the left and sizes would be the right. 
+
+The output of this is a new dataframe, with two columns: one from sizes, one from sub_r. We can now divide out our two columns to see if we have sampled some clades more because they are more speciose. If this were true, we would expect to see roughly the same proportion of sampling, but not the same number of samples. We will assign the sampling proportion to a new column called 'proportion'.
+
+```python
+new_sizes['proportion'] = new_sizes.reps/new_sizes.size
+```
+
+Do these sizes look right? Your answer should be no. It turns out that 'size' is a reserve word, and calls a function called size. This function returns the size of each object in bytes. So instead of dividing each entry in reps by each entry in size we're dividing by bytes. But that's OK, we can rename our columns on the fly:
+
+```python 
+new_sizes.columns = ['reps','num_spec','prop']
+```
+
+Now try it:
+
+```python
+new_sizes['proportion'] = new_sizes.reps/new_sizes.num_spec
+```
+
+Much better!
 
 
-## Lists and Loops
+> ###Challenge
+> - Try some other mathematical operations. Subtract the columns! 
+> - How could you delete a column if you decided you didn't want your mathematical output? (Hint: look at the drop function. Be aware some behaviors are a little odd.) 
+> - Think a little about data as read-only: where will you want to save these outputs?
+
+## Recap
+
+In this chapter, we have looked at subsetting our data. We used the groupby command to make data subsets along a biologically interesting axis. We then used loops and lists to process data and make the process of managing datasets easier. Finally, we joined together multiple data objects and used them to perform mathematical operations. In the next chapter, we will build on the concepts seen here to further automate data management. 
+
+
 
 # Chapter Five: Functions, Scripts and Revision Management 
 
-
+# Chapter Six: HPC?
 
 Following this chapter, there is a short practicum where we will use what we've learned to 
 subsample taxonomic data for use in a later phylogenetic analysis.
