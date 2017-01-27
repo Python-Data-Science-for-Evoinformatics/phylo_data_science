@@ -651,23 +651,23 @@ def extract_rows(file, ant_names):
 
 ```
 
-This definition statement is for a function named extract\_rows. This function takes as input a variable called file. I think you can guess where this is going  - file will be the name of a file from which we will extract the rows. It also takes as input a list of names of ants that we would like to extract. Recall that our rows in the dataframe are ant species.
+This definition statement is for a function named extract\_rows. This function takes as input a variable called data. I think you can guess where this is going  - data will be the name of a dataframe from which we will extract the rows. It also takes as input a list of names of ants that we would like to extract. Recall that our rows in the dataframe are ant species.
 
 The next thing that comes after the function definition is the docstring, or a comment that explains the purpose of the function.
 
 
 ```python
-def extract_rows(file, ant_names):
-'''A function to extract relevant data from dataframe'''
+def extract_rows(data, ant_names):
+	'''A function to extract relevant data from dataframe'''
 ```
 
 Next comes the body of the function, or the actual code. In the data directory, I have added a file called AntTestData.txt, containing a number of ant specimen names. These are the ants we would like to call out of our dataframe. We'll talk in a moment about how to read in a non-CSV text file. For now, write a little bit of code that will pull a single row based on an ant name - let's try Amblyopone_pallipes. Then check your answer below.
 
 
 ```python
-def extract_rows(file, ant_names):
-'''A function to extract relevant data from dataframe'''
-new_data = data.loc['Amblyopone_pallipes']
+def extract_rows(data, ant_names):
+	'''A function to extract relevant data from dataframe'''
+	new_data = data.loc['Amblyopone_pallipes']
 ```
 
 But we don't just want one name, we want a bunch of names. And what we have done above is called *hard-coding*. Hard coding is undesireable because it means that every time we want to use different data, we have to change the code. That is dangerous. So what we want to do is rewrite this function to take a bunch of names and fetch them from our data frame. 
@@ -676,25 +676,122 @@ So let's get ourselves a list of ant names.
 
 ```python
 def get_names(namefile):
-'''Read in a file of names'''
-with open(namefile, 'r') as f:
-    ant_names = f.read().splitlines() 
-return(ant_names)
+	'''Read in a file of names'''
+	with open(namefile, 'r') as f:
+   		ant_names = f.read().splitlines() 
+	return(ant_names)
 ```
 Above, we have added one more function piece - the return statement. The return statement allows us to preserve objects after the function is done running. In this case, we can pass the list of ant names out of the function. The above code does a lot of stuff. First, it takes as input a file of ant names. It uses a with statement to open the file, then uses a function called read to get the data out. Our data have newlines at the end - that's what causes each ant name to be on its own line when we open the file in a text editor. But that will cause the ant names to not be found in our dataframes, since the dataframe doesn't have newlines. Splitlines takes these off. Finally, we return the list of names.
 
 So now we have two functions, one to get our ant names and one to use the ant names to look up ants in the database. Let's rewrite our dataframe function to take a list of names. 
 
 ```python
-def extract_rows(file, ant_names):
-'''A function to extract relevant data from dataframe'''
-new_data = data.loc[ant_names]
-return(new_data)
+def extract_rows(data, ant_names):
+	'''A function to extract relevant data from dataframe'''
+	new_data = data.loc[ant_names]
+	return(new_data)
 ```
 
 Our function is complete! We have two functions, both of which are doing use_ful_ and interesting things. Now, let's look at how to make them use_able_ by scripting them into a Python program.
 
 ## Python Scripts
+
+We can write functions all day, but they don't run unless called - that is, unless we use their names to invoke them. Now, we will cover how to do this. As of right now, we have two functions:
+
+```python
+def extract_rows(data, ant_names):
+    '''A function to extract relevant data from dataframe'''
+    new_data = data.loc[ant_names]
+    return(new_data)
+
+def get_names(namefile):
+   '''Read in a file of names'''
+   with open(namefile, 'r') as f:
+       ant_names = f.read().splitlines() 
+   return(ant_names)
+```
+
+Open your text editor and past in these two functions.
+
+Before your functions, include the line:
+
+```python
+import pandas as pd
+```
+
+to import Pandas for your script.
+
+Now, we will build our function calls.
+
+```python
+
+if __name__ == '__main__':
+	data = pd.read_csv('Data/Ants.csv' index_col=0)
+	namefile = 'Data/AntTestData.txt'
+	ant_names = get_names(namefile)
+   new_dataframe = extract_rows(data, ant_names)
+   new_dataframe.to_csv('Data/processed_ants.csv')
+```
+
+This is an odd-looking statement. But in a script the name statement allows us to tell Python which functions to actually call. If we had extra functions that we didn't want to execute, we could just leave them out. 
+    
+Save this as first_script.py. In the git bash terminal, navigate to where you have saved the script (hopefully in the Spring2017 directory) and type:
+
+```python
+
+python first_script.py
+
+```
+
+You should see a 5-row dataframe pop out.
+
+But we've done something bad. Remember how we said that hard coding was not optimal? They still aren't. So let's think about how to get rid of the hard coding. See how I had you import a mystery modeule - sys? Sys allows us to pass in additional information from the command line. We can use the arg function to take in command-line arguments:
+if __name__ == '__main__':
+	data = pd.read_csv(sys.argv[1] index_col=0)
+	namefile = sys.argv[2]
+	ant_names = get_names(namefile)
+   new_dataframe = extract_rows(data, ant_names)
+   new_dataframe.write_to_csv(sys.argv[3])
+```
+
+Now, when we call this script, we type:
+
+```python
+
+python first_script.py Data/Ants.csv Data/AntTestData.txt Data/ant_processed.csv
+
+```
+
+Now, if we want to change the name of the output file, we just change the last argument at the command line. Need a different set of ants? Change the taxon list. Easy. No changing the code for every analysis.
+
+One final thing. Remember that data are read-only? We really oughtn't be writing to our data directory. Let's add just one more function. Add an import statement for the os library, which allows us to manipulate file paths:
+
+```python
+import os
+```
+
+Now we will write a function to us os to check if an output directory exists, and if not, to create it:
+
+```python
+def check_dir(path):
+	check = path.split('/')[0] 
+	os.listdir(check)
+	if 'output' in os.listdir(check):
+	    return
+	else:
+	    os.mkdir('%s/output' % check)  
+```
+
+## Challenge:
+
+1. Add a function call for check_dir to the main statement.
+2. Explain why check_dir does not have a return statement at the very end.
+3. How will you need to modify your invocation of the Python script to make sure your output is written to the right place.
+4. What is split doing? 
+5. Write a docstring for this function.
+
+
+
 
 
 
