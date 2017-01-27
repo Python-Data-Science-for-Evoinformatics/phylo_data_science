@@ -617,11 +617,87 @@ Much better!
 
 ## Recap
 
-In this chapter, we have looked at subsetting our data. We used the groupby command to make data subsets along a biologically interesting axis. We then used loops and lists to process data and make the process of managing datasets easier. Finally, we joined together multiple data objects and used them to perform mathematical operations. In the next chapter, we will build on the concepts seen here to further automate data management. 
-
+In this chapter, we have looked at subsetting our data. We used the groupby command to make 
+data subsets along a biologically interesting axis. We then used loops and lists to process 
+data and make the process of managing datasets easier. Finally, we joined together multiple 
+data objects and used them to perform mathematical operations. In the next chapter, we will 
+build on the concepts seen here to further automate data management. 
 
 
 # Chapter Five: Functions, Scripts and Revision Management 
+
+So far, we've covered the nuts and bolts of programming. We've learned a little bit about how to control Python, and it's time to think about controlling its environment. As you program more and more, you'll need to have maintainable pieces of code, and some framework to maintain them.
+
+In this chapter, we'll cover three core concepts. *Functions*, which are blocks of code that work together to achieve some purpose. We will discuss *scripts*, which may contain one or more functions and the comments needed to interpret and use them. And lastly, we will discuss *revision management*, the practice of using a defined system to track how and when changes are made to your code.
+
+By the end of this chapter, you will be able to:
+
+1. *Concept:* Explain why and how functions can be used to make code more maintainable. 
+2. *Concept:* How grouping functions into scripts can make it easier to understand and maintain code.
+3. *Concept & Hands-On:* Commands to use a revision management system to keep track of changes to your codebase.
+
+## Functions
+
+We've previously introduced functions in the context of calling functions from a package, like calling read_csv from Pandas. We're now going to discuss making our own functions to do everyday operations that we need.
+
+We can think of a function like an organ of the body - a function is a grouping of code that performs a task. For example, we might write a function that extracts relevant rows from a dataframe and writes them to a file. That's a great idea - let's do that here in a second.
+
+Why would we want to write functions, instead of just stuffing all our code into a file? There are several reasons. Functions provide a natural grouping for blocks of code. This makes it easier, just visually, to see what types of operations our code can do. And programming can be tricky - anything to make it easier will help us. Functions also have defined in and outputs. For example, a function that grabs columns from a dataframe might first check that the dataframe exists, and check that the file you're trying to write your data to doesn't exist so you don't overwrite good data. In this way, functions make it possible for us to better check that our code is working as expected. 
+
+Let's start by defining our function. The definition statement names the function and tells us what toexpect as input to that function. Without the right input, the code will stop executing. A definition statement looks like this:
+
+```python
+def extract_rows(file, ant_names):
+
+```
+
+This definition statement is for a function named extract\_rows. This function takes as input a variable called file. I think you can guess where this is going  - file will be the name of a file from which we will extract the rows. It also takes as input a list of names of ants that we would like to extract. Recall that our rows in the dataframe are ant species.
+
+The next thing that comes after the function definition is the docstring, or a comment that explains the purpose of the function.
+
+
+```python
+def extract_rows(file, ant_names):
+'''A function to extract relevant data from dataframe'''
+```
+
+Next comes the body of the function, or the actual code. In the data directory, I have added a file called AntTestData.txt, containing a number of ant specimen names. These are the ants we would like to call out of our dataframe. We'll talk in a moment about how to read in a non-CSV text file. For now, write a little bit of code that will pull a single row based on an ant name - let's try Amblyopone_pallipes. Then check your answer below.
+
+
+```python
+def extract_rows(file, ant_names):
+'''A function to extract relevant data from dataframe'''
+new_data = data.loc['Amblyopone_pallipes']
+```
+
+But we don't just want one name, we want a bunch of names. And what we have done above is called *hard-coding*. Hard coding is undesireable because it means that every time we want to use different data, we have to change the code. That is dangerous. So what we want to do is rewrite this function to take a bunch of names and fetch them from our data frame. 
+
+So let's get ourselves a list of ant names. 
+
+```python
+def get_names(namefile):
+'''Read in a file of names'''
+with open(namefile, 'r') as f:
+    ant_names = f.read().splitlines() 
+return(ant_names)
+```
+Above, we have added one more function piece - the return statement. The return statement allows us to preserve objects after the function is done running. In this case, we can pass the list of ant names out of the function. The above code does a lot of stuff. First, it takes as input a file of ant names. It uses a with statement to open the file, then uses a function called read to get the data out. Our data have newlines at the end - that's what causes each ant name to be on its own line when we open the file in a text editor. But that will cause the ant names to not be found in our dataframes, since the dataframe doesn't have newlines. Splitlines takes these off. Finally, we return the list of names.
+
+So now we have two functions, one to get our ant names and one to use the ant names to look up ants in the database. Let's rewrite our dataframe function to take a list of names. 
+
+```python
+def extract_rows(file, ant_names):
+'''A function to extract relevant data from dataframe'''
+new_data = data.loc[ant_names]
+return(new_data)
+```
+
+Our function is complete! We have two functions, both of which are doing use_ful_ and interesting things. Now, let's look at how to make them use_able_ by scripting them into a Python program.
+
+## Python Scripts
+
+
+
 
 # Chapter Six: HPC?
 
