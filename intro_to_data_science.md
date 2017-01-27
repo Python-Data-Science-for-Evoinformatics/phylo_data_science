@@ -782,14 +782,76 @@ def check_dir(path):
 	    os.mkdir('%s/output' % check)  
 ```
 
-## Challenge:
-
+>### Challenge:
+>
 1. Add a function call for check_dir to the main statement.
 2. Explain why check_dir does not have a return statement at the very end.
 3. How will you need to modify your invocation of the Python script to make sure your output is written to the right place.
 4. What is split doing? 
 5. Write a docstring for this function.
 
+
+## Revision Management
+
+Now we have an actual, working script. This is fantastic - we can send this to a coworker and have them reproduce our analyses. We can use it again later to recall exactly what we did!
+
+Until our coworker emails it back and says it doesn't work, and we open it to find a bunch of changes. Until we accidentally delete a piece of code, close our laptop, and go on vacation. Until our laptop dies.
+
+Enter revision management, for tracking changes to our code (or any other text file - this tutorial was written with revision management). As you're aware, we will be using git for revision management this semester. What we're going to do now is a really swift primer on some of the basic functionality of git and its web interface, GitHub. 
+
+First, we'll do some brief setup:
+
+
+```
+git config --global user.name "Your Name"
+$ git config --global user.email "you@youremail"
+```
+
+When you do the setup, use the email address you set up GitHub with. That way, GitHub will know the commits are from you and won't reject them (I have added you as collaborators on my project).
+
+I really want you to protect the script we just wrote together. First, add your initials to the name of your script so I know whose is whose. Mine would be first\_script\_amw.py. Now, in the Spring2017 directory, type:
+
+```
+git add first_script_yourinitials.py
+```
+
+This command lets git know that we're interested in tracking any changes made to this script. Next, we want to commit the script. Committing takes a snapshot of the script, preserving it as it existed in that moment in time. People differ on how often to commit. Some people commit frequently, some people only commit when they are done for the day.
+
+```
+git commit
+```
+
+This will now ask you for a short message describing what is being committed. You could say something like 'adding ant data parsing script' or 'initial draft of script'. Try for something informative.
+
+Now, we push to the internet:
+
+```
+git push
+```
+
+This may ask you for your username and password, if you cloned the repository over HTTPS. Once this has completed, you should be able to go to the website for the repository and look at your script!
+
+You might be wondering now where git is storing your log of revisions. If you go up one level like so:
+
+```
+
+cd ..
+```
+
+and list hidden files:
+
+```
+ls -a
+```
+
+you will see a folder called .git. This stores all your checkpoints and snapshots. 
+
+We'll cover more complex Git functionality in the future as we do more work.
+
+> ### Challenge
+> 
+> Try to find a tpyo to fix in the lessons. Fix it, add the file in git, commit it and push it.
+> 
 
 
 
